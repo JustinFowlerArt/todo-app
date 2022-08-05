@@ -2,7 +2,7 @@ export const App = () => {
 	return (
 		<div>
 			<h1 id='title' className='text-3xl font-bold underline'>
-				Hello World
+				Todo
 			</h1>
 		</div>
 	);
