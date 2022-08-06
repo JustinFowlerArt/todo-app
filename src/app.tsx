@@ -29,7 +29,7 @@ export const App = () => {
 
 	return (
 		<div
-			className={`h-screen ${
+			className={`h-screen flex flex-col items-center ${
 				theme === 'dark'
 					? 'dark bg-dark-blue text-dark-gray-blue-100'
 					: 'bg-light-gray text-light-gray-blue-400'

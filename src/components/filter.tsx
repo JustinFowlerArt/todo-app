@@ -10,7 +10,7 @@ export const Filter = ({ name, filter, setFilter }: Props) => {
 			className={`font-bold ${
 				filter === name.toLowerCase()
 					? 'text-bright-blue'
-					: 'text-light-gray-blue-300 dark:text-dark-gray-blue-200'
+					: 'text-light-gray-blue-300 dark:text-dark-gray-blue-200 hover:text-dark-gray-blue-300 dark:hover:text-white'
 			}`}
 			value={name.toLowerCase()}
 			onClick={e => {
