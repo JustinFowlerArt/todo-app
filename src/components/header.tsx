@@ -22,7 +22,7 @@ export const Header = ({ changeTheme, theme }: Props) => {
 				<>
 					<img
 						src='/images/bg-mobile-dark.jpg'
-						className='absolute top-0 sm:hidden'
+						className='absolute top-0 sm:hidden w-full'
 					/>
 					<img
 						src='/images/bg-desktop-dark.jpg'
@@ -33,7 +33,7 @@ export const Header = ({ changeTheme, theme }: Props) => {
 				<>
 					<img
 						src='/images/bg-mobile-light.jpg'
-						className='absolute top-0 sm:hidden'
+						className='absolute top-0 sm:hidden w-full'
 					/>
 					<img
 						src='/images/bg-desktop-light.jpg'
