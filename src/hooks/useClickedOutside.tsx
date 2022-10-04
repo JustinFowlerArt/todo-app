@@ -13,7 +13,7 @@ export default function useClickedOutside(
 		) => {
 			// If getter is true and the clicked target is not within the div,
 			// then flip the boolean
-			if (getter && ref.current && !ref.current.contains(e.target)) {
+			if (getter && ref.current && !ref.current.contains(e.target as Node)) {
 				setter(false);
 				if (callback) {
 					callback();
