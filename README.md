@@ -7,6 +7,7 @@ This is a solution to the [Todo app challenge on Frontend Mentor](https://www.fr
 - [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
+  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
@@ -34,6 +35,10 @@ Users should be able to:
 
 ![](./design/final-mobile-light.png)
 ![](./design/final-mobile-dark.png)
+
+### Links
+- [Solution URL](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW/hub/todo-app-with-react-typescript-and-tailwind-wvsOirgKH5)
+- [Live Site URL](https://todo-app.justinfowlerart.com/)
 
 ## My process
 

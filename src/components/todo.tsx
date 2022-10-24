@@ -58,6 +58,7 @@ export const Todo = ({
 			<div className='flex items-center w-full py-4'>
 				<div className='mr-4' onClick={() => handleComplete(todo.id)}>
 					<button
+						aria-label={`${todo.completed ? 'Mark todo not completed' : 'Mark todo completed'}`}
 						className={`relative flex items-center justify-center rounded-full h-6 w-6 ${
 							todo.completed
 								? 'bg-gradient-to-b from-check-background-start to-check-background-end'
@@ -65,9 +66,9 @@ export const Todo = ({
 						}`}
 					>
 						{todo.completed ? (
-							<img src='/images/icon-check.svg' />
+							<img src='/images/icon-check.svg' alt='Check mark'/>
 						) : (
-							<div className='h-[90%] w-[90%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-dark-desaturated-blue rounded-full'></div>
+							<span className='h-[90%] w-[90%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-dark-desaturated-blue rounded-full'></span>
 						)}
 					</button>
 				</div>
@@ -97,6 +98,7 @@ export const Todo = ({
 			<button onClick={() => handleDelete(todo.id)}>
 				<img
 					className='h-3.5 w-3.5 lg:hidden group-hover:block'
+					alt='Delete todo'
 					src='/images/icon-cross.svg'
 				></img>
 			</button>

@@ -12,9 +12,10 @@ export const Input = ({ newTodo, handleChange, handleSubmit }: Props) => {
 		>
 			<button
 				type='submit'
-				className='relative mr-4 border aspect-square rounded-full h-6 w-6 border-light-gray-blue-100 dark:border-dark-gray-blue-300 hover:bg-gradient-to-b hover:from-check-background-start hover:to-check-background-end'
+				aria-label="Add todo"
+				className='relative mr-4 border aspect-square rounded-full h-6 w-6 border-light-gray-blue-100 cursor-pointer dark:border-dark-gray-blue-300 hover:bg-gradient-to-b hover:from-check-background-start hover:to-check-background-end'
 			>
-				<div className='h-[90%] w-[90%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-dark-desaturated-blue rounded-full'></div>
+				<span className='h-[90%] w-[90%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-dark-desaturated-blue rounded-full'></span>
 			</button>
 			<input
 				type='text'

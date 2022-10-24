@@ -12,9 +12,9 @@ export const Header = ({ changeTheme, theme }: Props) => {
 				</h1>
 				<div onClick={() => changeTheme()}>
 					{theme === 'dark' ? (
-						<img src='/images/icon-sun.svg' />
+						<img src='/images/icon-sun.svg' alt='Light mode'/>
 					) : (
-						<img src='/images/icon-moon.svg' />
+						<img src='/images/icon-moon.svg' alt='Dark mode'/>
 					)}
 				</div>
 			</div>
@@ -22,10 +22,12 @@ export const Header = ({ changeTheme, theme }: Props) => {
 				<>
 					<img
 						src='/images/bg-mobile-dark.jpg'
+						alt='Dark platform with lights'
 						className='absolute top-0 sm:hidden w-full'
 					/>
 					<img
 						src='/images/bg-desktop-dark.jpg'
+						alt='Dark platform with lights'
 						className='absolute top-0 hidden sm:block w-full'
 					/>
 				</>
@@ -33,10 +35,12 @@ export const Header = ({ changeTheme, theme }: Props) => {
 				<>
 					<img
 						src='/images/bg-mobile-light.jpg'
+						alt='Mountain landscape'
 						className='absolute top-0 sm:hidden w-full'
 					/>
 					<img
 						src='/images/bg-desktop-light.jpg'
+						alt='Mountain landscape'
 						className='absolute top-0 hidden sm:block w-full'
 					/>
 				</>
