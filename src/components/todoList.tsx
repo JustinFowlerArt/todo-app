@@ -6,8 +6,11 @@ import { Todo } from './todo';
 export interface iTodo {
 	id: number;
 	name: string;
-	completed: boolean;
+	complete: boolean;
+	[key: string]: boolean | number | string;
 }
+
+export const todoStatuses = ['all', 'active', 'completed'];
 
 export const TodoList = () => {
 	const [firstRender, setFirstRender] = useState(true);
@@ -16,29 +19,34 @@ export const TodoList = () => {
 	const [newTodo, setNewTodo] = useState('');
 	const [filter, setFilter] = useState('all');
 
-	const itemsLeft = todos.filter(todo => !todo.completed).length;
+	const itemsLeft = todos.filter(todo => !todo.complete).length;
 
 	const dragItem = useRef(0);
 	const dragOverItem = useRef(0);
 
 	useEffect(() => {
-		const localTodos = localStorage.getItem('todos');
 		if (firstRender) {
+			const localTodos = localStorage.getItem('todos');
 			if (localTodos) {
 				setTodos(JSON.parse(localTodos));
 			}
 			setFirstRender(false);
+		} else {
+			localStorage.setItem('todos', JSON.stringify(todos));
 		}
-	}, [firstRender]);
+	}, [firstRender, todos]);
 
-	const updateLocal = (updatedTodos: iTodo[]) => {
-		localStorage.setItem('todos', JSON.stringify(updatedTodos));
-	};
-
+	/**
+	 * Update local state for new todo name.
+	 */
 	const handleChange = (name: string) => {
 		setNewTodo(name);
 	};
 
+	/**
+	 * Creates new todo named from NewTodo input field with all other attributes at default.
+	 * Resets NewTodo input field.
+	 */
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setTodos([
@@ -46,59 +54,58 @@ export const TodoList = () => {
 			{
 				id: todos.length + 1,
 				name: newTodo,
-				completed: false,
-			},
-		]);
-		updateLocal([
-			...todos,
-			{
-				id: todos.length + 1,
-				name: newTodo,
-				completed: false,
+				complete: false,
 			},
 		]);
 		setNewTodo('');
 	};
 
-	const handleRename = (id: number, name: string) => {
+	/**
+	 * Handles updating individual todo attributes.
+	 * @param id id of todo to be updated
+	 * @param attribute name of attribute to be updated
+	 * @param value property to assign to attribute to be updated
+	 */
+	const handleUpdate = (
+		id: number,
+		attribute: string,
+		value: boolean | number | string
+	) => {
 		const updatedTodos = [...todos];
 		const todo = updatedTodos.find(todo => todo.id === id);
 		if (todo) {
-			todo.name = name;
+			todo[attribute] = value;
 		}
 		setTodos(updatedTodos);
-		updateLocal(updatedTodos);
 	};
 
-	const handleComplete = (id: number) => {
-		const updatedTodos = [...todos];
-		const todo = updatedTodos.find(todo => todo.id === id);
-		if (todo) {
-			todo.completed = !todo.completed;
-		}
-		setTodos(updatedTodos);
-		updateLocal(updatedTodos);
-	};
-
-	const handleCompleteAll = () => {
-		const updatedTodos = todos.filter(todo => !todo.completed);
-		setTodos(updatedTodos);
-		updateLocal(updatedTodos);
-	};
-
+	/**
+	 * Delete individual todo based on id.
+	 */
 	const handleDelete = (id: number) => {
 		const updatedTodos = todos.filter(todo => todo.id !== id);
 		setTodos(updatedTodos);
-		updateLocal(updatedTodos);
 	};
 
+	/**
+	 * Removes all todos that have been marked as complete.
+	 */
+	const handleDeleteCompleted = () => {
+		const updatedTodos = todos.filter(todo => !todo.complete);
+		setTodos(updatedTodos);
+	};
+
+	/**
+	 * Filters results  based on filter status.
+	 * @returns filtered array of todos
+	 */
 	const filterResults = () => {
 		let results = todos;
 		if (filter === 'active') {
-			results = results.filter(todo => !todo.completed);
+			results = results.filter(todo => !todo.complete);
 		}
 		if (filter === 'completed') {
-			results = results.filter(todo => todo.completed);
+			results = results.filter(todo => todo.complete);
 		}
 		return results;
 	};
@@ -125,7 +132,6 @@ export const TodoList = () => {
 		updatedTodos.splice(dragItem.current, 1);
 		updatedTodos.splice(dragOverItem.current, 0, dragItemContent);
 		setTodos(updatedTodos);
-		updateLocal(updatedTodos);
 	};
 
 	return (
@@ -143,8 +149,7 @@ export const TodoList = () => {
 								key={index}
 								todo={todo}
 								index={index}
-								handleRename={handleRename}
-								handleComplete={handleComplete}
+								handleUpdate={handleUpdate}
 								handleDelete={handleDelete}
 								handleDragStart={handleDragStart}
 								handleDragEnter={handleDragEnter}
@@ -159,11 +164,14 @@ export const TodoList = () => {
 									: `${itemsLeft} items left`}
 							</span>
 							<div className='hidden lg:block'>
-								<FilterList filter={filter} setFilter={setFilter} />
+								<FilterList
+									filter={filter}
+									setFilter={setFilter}
+								/>
 							</div>
 							<button
 								className='hover:text-dark-gray-blue-300 dark:hover:text-white'
-								onClick={handleCompleteAll}
+								onClick={handleDeleteCompleted}
 							>
 								Clear Completed
 							</button>

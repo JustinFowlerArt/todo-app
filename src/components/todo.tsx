@@ -5,11 +5,17 @@ import { iTodo } from './todoList';
 interface Props {
 	todo: iTodo;
 	index: number;
-	handleRename: (id: number, name: string) => void;
-	handleComplete: (id: number) => void;
+	handleUpdate: (
+		id: number,
+		attribute: string,
+		value: boolean | string | number
+	) => void;
 	handleDelete: (id: number) => void;
 	handleDragStart: (index: number) => void;
-	handleDragEnter: (e: React.DragEvent<HTMLDivElement>, index: number) => void;
+	handleDragEnter: (
+		e: React.DragEvent<HTMLDivElement>,
+		index: number
+	) => void;
 	handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
 	handleDrop: () => void;
 }
@@ -17,8 +23,7 @@ interface Props {
 export const Todo = ({
 	todo,
 	index,
-	handleRename,
-	handleComplete,
+	handleUpdate,
 	handleDelete,
 	handleDragStart,
 	handleDragEnter,
@@ -26,20 +31,21 @@ export const Todo = ({
 	handleDrop,
 }: Props) => {
 	const [renaming, setRenaming] = useState(false);
-	const [updated, setUpdated] = useState(false);
 	const [newName, setNewName] = useState(todo.name);
 
+	/**
+	 * Update local state for todo name.
+	 */
 	const handleChange = (name: string) => {
 		setNewName(name);
 	};
 
-	const toggleUpdated = () => {
-		handleRename(todo.id, newName);
-		setUpdated(!updated);
-	};
-
-	const ref = useClickedOutside(renaming, setRenaming, toggleUpdated);
-
+	/**
+	 * Update todo name and set renaming to false if clicked outside of renamed todo div.
+	 */
+	const ref = useClickedOutside(renaming, setRenaming, () =>
+		handleUpdate(todo.id, 'name', newName)
+	);
 	return (
 		<div
 			className='flex justify-between group px-6 border-b border:light-gray-blue-200 dark:border-b-dark-gray-blue-300 cursor-move'
@@ -56,17 +62,27 @@ export const Todo = ({
 			onDragEnd={() => handleDrop()}
 		>
 			<div className='flex items-center w-full py-4'>
-				<div className='mr-4' onClick={() => handleComplete(todo.id)}>
+				<div
+					className='mr-4'
+					onClick={() =>
+						handleUpdate(todo.id, 'complete', !todo.complete)
+					}
+				>
 					<button
-						aria-label={`${todo.completed ? 'Mark todo not completed' : 'Mark todo completed'}`}
-						className={`relative flex items-center justify-center rounded-full h-6 w-6 ${
-							todo.completed
+						aria-label={`${todo.complete
+								? 'Mark todo not completed'
+								: 'Mark todo completed'
+							}`}
+						className={`relative flex items-center justify-center rounded-full h-6 w-6 ${todo.complete
 								? 'bg-gradient-to-b from-check-background-start to-check-background-end'
 								: 'border border-light-gray-blue-100 dark:border-dark-gray-blue-300 hover:bg-gradient-to-b hover:from-check-background-start hover:to-check-background-end'
-						}`}
+							}`}
 					>
-						{todo.completed ? (
-							<img src='/images/icon-check.svg' alt='Check mark'/>
+						{todo.complete ? (
+							<img
+								src='/images/icon-check.svg'
+								alt='Check mark'
+							/>
 						) : (
 							<span className='h-[90%] w-[90%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-dark-desaturated-blue rounded-full'></span>
 						)}
@@ -85,10 +101,9 @@ export const Todo = ({
 							onClick={() => {
 								setRenaming(true);
 							}}
-							className={`${
-								todo.completed &&
+							className={`${todo.complete &&
 								'line-through text-light-gray-blue-200 dark:text-dark-gray-blue-200'
-							}`}
+								}`}
 						>
 							{todo.name}
 						</span>
