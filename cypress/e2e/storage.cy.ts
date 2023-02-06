@@ -1,22 +1,13 @@
 /// <reference types="cypress" />
 
 context('Local Storage', () => {
-	const url = 'http://localhost:3000';
-
-	// beforeEach(() => {
-	// 	cy.visit(url);
-	// });
-	// Although localStorage is automatically cleared
-	// in between tests to maintain a clean state
-	// sometimes we need to clear localStorage manually
-
 	it('cy.clearLocalStorage() - clear all data in localStorage for the current origin', () => {
 		// clearLocalStorage() yields the localStorage object
 		cy.clearLocalStorage().should('have.length', 0);
 	});
 
 	it('add and remove new todo item from local storage', () => {
-		cy.visit(url);
+		cy.visit('/');
 
 		const newItem = 'Run Cypress tests';
 
@@ -44,7 +35,7 @@ context('Local Storage', () => {
 	it('pull todos from local storage on load', () => {
 		const storageItem = 'Run Cypress tests';
 
-		cy.visit(url, {
+		cy.visit('/', {
 			onBeforeLoad(win) {
 				win.localStorage.setItem(
 					'todos',

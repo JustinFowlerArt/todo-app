@@ -6,10 +6,8 @@ describe('to-do app', () => {
 	const secondTodo = 'Walk the dog';
 	const todoItem = '[data-cy=todo]';
 
-	const url = 'http://localhost:3000';
-
 	it('should let a user add, delete, complete, and filter todos', () => {
-		cy.visit(url, {
+		cy.visit('/', {
 			onBeforeLoad(win) {
 				win.localStorage.setItem(
 					'todos',
