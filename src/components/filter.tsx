@@ -7,6 +7,7 @@ interface Props {
 export const Filter = ({ name, filter, setFilter }: Props) => {
 	return (
 		<button
+			data-cy='filter'
 			className={`font-bold ${filter === name
 					? 'text-bright-blue'
 					: 'text-light-gray-blue-300 dark:text-dark-gray-blue-200 hover:text-dark-gray-blue-300 dark:hover:text-white'

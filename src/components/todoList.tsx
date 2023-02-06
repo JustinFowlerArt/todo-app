@@ -110,6 +110,10 @@ export const TodoList = () => {
 		return results;
 	};
 
+	const checkCompleted = () => {
+		return todos.filter(todo => todo.complete);
+	}
+
 	const handleDragStart = (index: number) => {
 		dragItem.current = index;
 	};
@@ -143,7 +147,10 @@ export const TodoList = () => {
 			/>
 			{todos.length > 0 && (
 				<>
-					<div className='flex flex-col w-full rounded-lg bg-white dark:bg-dark-desaturated-blue shadow-lg shadow-light-gray-blue-100 dark:shadow-black lg:shadow-2xl'>
+					<div
+						data-cy='todo-list'
+						className='flex flex-col w-full rounded-lg bg-white dark:bg-dark-desaturated-blue shadow-lg shadow-light-gray-blue-100 dark:shadow-black lg:shadow-2xl'
+					>
 						{filterResults().map((todo, index) => (
 							<Todo
 								key={index}
@@ -157,30 +164,25 @@ export const TodoList = () => {
 								handleDrop={handleDrop}
 							/>
 						))}
-						<div className='flex justify-between px-6 py-4 text-sm text-light-gray-blue-300 dark:text-dark-gray-blue-200'>
+						<div className='relative flex justify-between px-6 py-4 text-sm text-light-gray-blue-300 dark:text-dark-gray-blue-200'>
 							<span>
 								{itemsLeft === 1
 									? `${itemsLeft} item left`
 									: `${itemsLeft} items left`}
 							</span>
-							<div className='hidden lg:block'>
-								<FilterList
-									filter={filter}
-									setFilter={setFilter}
-								/>
-							</div>
-							<button
-								className='hover:text-dark-gray-blue-300 dark:hover:text-white'
-								onClick={handleDeleteCompleted}
-							>
-								Clear Completed
-							</button>
+							<FilterList filter={filter} setFilter={setFilter} />
+							{checkCompleted().length > 0 && (
+								<button
+									data-cy='complete-all'
+									className='hover:text-dark-gray-blue-300 dark:hover:text-white'
+									onClick={handleDeleteCompleted}
+								>
+									Clear Completed
+								</button>
+							)}
 						</div>
 					</div>
-					<div className='w-full lg:hidden'>
-						<FilterList filter={filter} setFilter={setFilter} />
-					</div>
-					<span className='font-bold py-6 text-light-gray-blue-300 dark:text-dark-gray-blue-300 lg:text-sm'>
+					<span className='font-bold pb-6 pt-24 text-light-gray-blue-300 dark:text-dark-gray-blue-300 lg:pt-6 lg:text-sm'>
 						Drag and drop to reorder list
 					</span>
 				</>

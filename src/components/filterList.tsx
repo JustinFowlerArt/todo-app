@@ -8,7 +8,7 @@ interface Props {
 
 export const FilterList = ({ filter, setFilter }: Props) => {
 	return (
-		<div className='flex space-x-6 justify-center w-full py-4 rounded-lg bg-white dark:bg-dark-desaturated-blue shadow-lg shadow-light-gray-blue-100 dark:shadow-black lg:shadow-none lg:py-0 lg:w-auto'>
+		<div className='flex space-x-6 justify-center w-full text-base py-4 rounded-lg bg-white dark:bg-dark-desaturated-blue shadow-lg shadow-light-gray-blue-100 absolute -bottom-[4.5rem] left-0 dark:shadow-black lg:static lg:text-sm lg:shadow-none lg:py-0 lg:w-auto'>
 			{todoStatuses.map((item, index) => (
 				<Filter
 					key={index}
